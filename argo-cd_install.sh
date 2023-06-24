@@ -45,7 +45,7 @@ kubectl get po -A -o wide
 kubectl get no -A -o wide
 echo -e "2. Check NodePort value for ArgoCD Server service:"
 kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}'
-echo -e "3. Access it with https://nodeip:32321"
+echo -e "3. Access it with https://nodeip:NodePort"
 echo -e "4. Use secret to access it:"
 kubectl get secrets -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 echo -e "!!!"
