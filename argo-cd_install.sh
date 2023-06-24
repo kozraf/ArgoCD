@@ -1,4 +1,4 @@
-sudo tee /home/vagrant/ArgoCD//argocd-pv.yaml <<EOF
+sudo tee /home/vagrant/ArgoCD/argocd-pv.yaml <<EOF
 apiVersion: v1
 kind: PersistentVolume
 metadata:
