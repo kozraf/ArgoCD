@@ -1,49 +1,5 @@
-# Create a directory for ArgoCD on NFS and set the permissions
-sudo mkdir -p /srv/nfs/argocd
-sudo chown nobody:nogroup /srv/nfs/argocd
-sudo chmod 777 /srv/nfs/argocd
-
 # Create a new Kubernetes namespace for ArgoCD
 kubectl create namespace argocd
-
-# Create a file with the definition for a Persistent Volume (PV) using a here-document (EOF)
-sudo tee /home/vagrant/ArgoCD/argocd-pv.yaml <<EOF
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: argocd-pv
-spec:
-  capacity:
-    storage: 2Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-storage
-  nfs:
-    path: /srv/nfs/argocd
-    server: 192.168.89.141
-EOF
-
-# Create a file with the definition for a Persistent Volume Claim (PVC) using a here-document (EOF)
-sudo tee /home/vagrant/ArgoCD/argocd-pvc.yaml <<EOF
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: argocd-pvc
-  namespace: argocd
-spec:
-  storageClassName: nfs-storage
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-EOF
-
-# Apply the PV and PVC definitions to the Kubernetes cluster
-kubectl apply -f /home/vagrant/ArgoCD/argocd-pv.yaml
-kubectl apply -f /home/vagrant/ArgoCD/argocd-pvc.yaml
 
 # Add the ArgoCD Helm repository and update Helm
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -92,6 +48,11 @@ kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.ports[?(@.name=="htt
 echo -e "3. Access it with https://nodeip:32321"
 echo -e "4. Use secret to access it:"
 kubectl get secrets -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+echo -e "!!!"
+echo -e "\033[33mRemember to delete initial secret once you login with: \033[0m"
+echo -e "\033[33mkubectl -n argocd delete secret argocd-initial-admin-secret \033[0m"
+
+
 
 #Uninstall with:
 #helm uninstall argocd -n argocd
