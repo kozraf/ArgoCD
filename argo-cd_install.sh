@@ -84,7 +84,7 @@ done
 
 #Instructions for the user:
 echo -e "\e[32mInstructions:!\e[0m"
-echo -e "1. Check on which node kubernetes-dashboard pod is running"
+echo -e "1. Check on which node argocd-server pod is running"
 kubectl get po -A -o wide
 kubectl get no -A -o wide
 echo -e "2. Check NodePort value for ArgoCD Server service:"
