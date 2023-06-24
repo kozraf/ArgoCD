@@ -5,15 +5,15 @@ metadata:
   name: argocd-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 2Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
+  storageClassName: nfs-storage
   nfs:
-    path: <nfs-server-path>
-    server: <nfs-server-ip>
+    path: /srv/nfs/k8s
+    server: 192.168.89.141
 EOF
 
 sudo tee /home/vagrant/ArgoCD/argocd-pv.yaml <<EOF
@@ -23,12 +23,12 @@ metadata:
   name: argocd-pvc
   namespace: argocd
 spec:
-  storageClassName: nfs
+  storageClassName: nfs-storage
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 2Gi
 EOF
 
 kubectl apply -f /home/vagrant/ArgoCD/argocd-pv.yaml
