@@ -48,7 +48,6 @@ kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.ports[?(@.name=="htt
 echo -e "3. Access it with https://nodeip:NodePort"
 echo -e "4. Use secret to access it:"
 kubectl get secrets -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-echo -e "!!!"
 echo -e "\033[33mRemember to delete initial secret once you login with: \033[0m"
 echo -e "\033[33mkubectl -n argocd delete secret argocd-initial-admin-secret \033[0m"
 
