@@ -1,9 +1,12 @@
+# Create a directory for ArgoCD on NFS and set the permissions
 sudo mkdir -p /srv/nfs/argocd
 sudo chown nobody:nogroup /srv/nfs/argocd
 sudo chmod 777 /srv/nfs/argocd
 
+# Create a new Kubernetes namespace for ArgoCD
 kubectl create namespace argocd
 
+# Create a file with the definition for a Persistent Volume (PV) using a here-document (EOF)
 sudo tee /home/vagrant/ArgoCD/argocd-pv.yaml <<EOF
 apiVersion: v1
 kind: PersistentVolume
@@ -22,6 +25,7 @@ spec:
     server: 192.168.89.141
 EOF
 
+# Create a file with the definition for a Persistent Volume Claim (PVC) using a here-document (EOF)
 sudo tee /home/vagrant/ArgoCD/argocd-pvc.yaml <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -37,23 +41,27 @@ spec:
       storage: 2Gi
 EOF
 
+# Apply the PV and PVC definitions to the Kubernetes cluster
 kubectl apply -f /home/vagrant/ArgoCD/argocd-pv.yaml
 kubectl apply -f /home/vagrant/ArgoCD/argocd-pvc.yaml
 
-
+# Add the ArgoCD Helm repository and update Helm
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 
+# Create a file with specific values for the ArgoCD Helm chart
 sudo tee /home/vagrant/ArgoCD/values.yaml <<EOF
 server:
   service:
     type: NodePort
 EOF
 
+# Install ArgoCD using Helm and the custom values
 helm install argocd argo/argo-cd -f values.yaml --namespace argocd
 # If above was run before - CRDs will still exists so use:
 #helm install argocd argo/argo-cd -f values.yaml --skip-crds -n argocd
 
+# Wait for all pods in all namespaces to be running
 while true; do
   for ns in $(kubectl get namespaces -o=jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do
     for pod in $(kubectl get pods -n $ns -o=jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do
@@ -74,8 +82,7 @@ while true; do
   break
 done
 
-kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}'
-
+#Instructions for the user:
 echo -e "********How to access ArgoCD*********"
 echo -e "1. Check on which node kubernetes-dashboard pod is running"
 kubectl get no -A -o wide
