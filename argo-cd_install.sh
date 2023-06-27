@@ -52,6 +52,5 @@ echo -e "\033[33mRemember to delete initial secret once you login with: \033[0m"
 echo -e "\033[33mkubectl -n argocd delete secret argocd-initial-admin-secret \033[0m"
 
 
-
 #Uninstall with:
 #helm uninstall argocd -n argocd
