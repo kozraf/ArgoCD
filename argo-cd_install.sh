@@ -13,7 +13,7 @@ server:
 EOF
 
 # Install ArgoCD using Helm and the custom values
-helm install argocd argo/argo-cd -f values.yaml --namespace argocd
+helm install argocd argo/argo-cd -f /home/vagrant/ArgoCD/values.yaml --namespace argocd
 # If above was run before - CRDs will still exists so use:
 #helm install argocd argo/argo-cd -f values.yaml --skip-crds -n argocd
 
@@ -45,7 +45,7 @@ kubectl get po -A -o wide
 kubectl get no -A -o wide
 echo -e "2. Check NodePort value for ArgoCD Server service:"
 kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}'
-echo -e "3. Access it with https://nodeip:NodePort"
+echo -e "\n3. Access it with https://nodeip:NodePort"
 echo -e "4. Use secret to access it:"
 kubectl get secrets -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 echo -e "\033[33mRemember to delete initial secret once you login with: \033[0m"
