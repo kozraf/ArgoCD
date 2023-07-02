@@ -34,6 +34,7 @@ while true; do
       fi
     done
   done
+  sleep 10
   echo -e "\e[32mAll pods are ready!\e[0m"
   break
 done
