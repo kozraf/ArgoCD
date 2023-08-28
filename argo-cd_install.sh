@@ -6,14 +6,14 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 
 # Create a file with specific values for the ArgoCD Helm chart
-sudo tee /home/vagrant/ArgoCD/values.yaml <<EOF
+sudo tee /home/vagrant/RafK8clstr/ArgoCD/values.yaml <<EOF
 server:
   service:
     type: NodePort
 EOF
 
 # Install ArgoCD using Helm and the custom values
-helm install argocd argo/argo-cd -f /home/vagrant/ArgoCD/values.yaml --namespace argocd
+helm install argocd argo/argo-cd -f /home/vagrant/RafK8clstr/ArgoCD/values.yaml --namespace argocd
 # If above was run before - CRDs will still exists so use:
 #helm install argocd argo/argo-cd -f values.yaml --skip-crds -n argocd
 
