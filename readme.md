@@ -17,6 +17,10 @@ ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It allo
 - **Custom Configuration**: The script includes custom values for the ArgoCD Helm chart, making it flexible for different deployment needs.
 - **Namespace Isolation**: ArgoCD is set up in its own dedicated namespace, ensuring isolation and security.
 
+## Requirements
+- **Kubernetes** - check out my [RafK8clstr](https://github.com/kozraf/RafK8clstr) which will help you to deploy 3-node K8 cluster
+- **Helm** - also included with [RafK8clstr](https://github.com/kozraf/RafK8clstr)
+
 ## Setup
 
 1. Ensure you have `kubectl` and `helm` installed and configured.
