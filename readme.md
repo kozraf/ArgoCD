@@ -22,7 +22,7 @@ ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It allo
 1. Ensure you have `kubectl` and `helm` installed and configured.
 2. Run the `argo-cd_install.sh` script.
 
-## !!Important!!
+### !Important!
 
 Script included in this repo is used by [RafK8clstr](https://github.com/kozraf/RafK8clstr) but you can adjust it for your needs. Only relevant portion to be adjusted is:
 
@@ -39,4 +39,4 @@ and
 
 Just adjust **"/home/vagrant/RafK8clstr/ArgoCD/values.yaml"** to whatever path you desire in your environment so the helm chart will configure the Kubernetes service with NodePort during ArgoCD deployment.
 
-:)
+
