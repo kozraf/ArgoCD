@@ -43,4 +43,6 @@ and
 
 Just adjust **"/home/vagrant/RafK8clstr/ArgoCD/values.yaml"** to whatever path you desire in your environment so the helm chart will configure the Kubernetes service with NodePort during ArgoCD deployment.
 
+## License
 
+The scripts, configurations, and documentation in this project are licensed under the MIT License. This license applies only to the scripts, configurations, and documentation contained in this repository and not to the software they interact with. 
